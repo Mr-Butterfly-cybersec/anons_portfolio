@@ -19,15 +19,6 @@ const initialState = {
   error: ""
 };
 
-/* nav buttons — XP window-style buttons */
-const navButtons = [
-  { label: "home", href: "#top" },
-  { label: "console", href: "#console" },
-  { label: "the lab", href: "#lab" },
-  { label: "the art", href: "#art" },
-  { label: "find me", href: "#links" },
-  { label: "linktree", href: "https://linktr.ee/anonymous4140p", ext: true }
-];
 
 export default function Home() {
   const [state, setState] = useState(initialState);
@@ -230,20 +221,6 @@ export default function Home() {
         </span>
       </div>
 
-      {/* nav — XP window-style buttons */}
-      <nav className="site-nav">
-        {navButtons.map((btn) => (
-          <a
-            className="nav-btn"
-            key={btn.label}
-            href={btn.href}
-            target={btn.ext ? "_blank" : undefined}
-            rel={btn.ext ? "noreferrer" : undefined}
-          >
-            {btn.label.toUpperCase()}
-          </a>
-        ))}
-      </nav>
 
       {/* the XP field console — big, stretched wide */}
       <XpConsole />

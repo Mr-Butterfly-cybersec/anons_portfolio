@@ -10,8 +10,7 @@ const PROFILE_LINES = [
   "Name: Riyanshi",
   "Gender: She/her",
   "Role: Test Subject",
-  "Creator Name: Anonymous4140p",
-  "Purpose: still figuring out"
+  "Creator Name: Anonymous4140p"
 ];
 
 export default function MyRiyanshiExe() {
