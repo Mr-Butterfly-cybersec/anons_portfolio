@@ -111,7 +111,6 @@ export default function MyRiyanshiExe() {
         {/* artwork 1 — the intro image */}
         <div className="xp-intro-art">
           <img src="/art/riya-1.jpg" alt="Riyanshi artwork" draggable={false} />
-          <div className="xp-intro-scan" aria-hidden="true" />
         </div>
 
         {/* self-typing profile terminal */}

@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 
 /* SLIDESHOW — clean, retro photo viewer for drawings.
-   - Themed buttons (dark panel, line-strong border, theme green)
-   - Zero glowing effects
-   - Removed plate indicator box per user request
-   - Pure, crisp retro aesthetic */
+   - Smooth 60fps crossfade transitions between slides
+   - Preloaded slide images for instant, zero-flicker switching
+   - Themed brutalist retro buttons (no XP icons, no glowing effects)
+   - Uncropped contain presentation */
 
 const SLIDES = [
   { url: "/art/riya-1.jpg", title: "Artwork #01 — Riyanshi Noir" },
@@ -21,6 +21,15 @@ export default function Sketchbook() {
   const prev = () => setCurrent((c) => (c === 0 ? SLIDES.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === SLIDES.length - 1 ? 0 : c + 1));
 
+  // Preload all slides in browser cache to eliminate switching flicker
+  useEffect(() => {
+    SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.url;
+    });
+  }, []);
+
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") prev();
@@ -68,7 +77,7 @@ export default function Sketchbook() {
           </div>
         </div>
 
-        {/* Toolbar with in-theme buttons (no plate indicator box, no XP icons) */}
+        {/* Toolbar with in-theme buttons */}
         <div className="xp-slideshow-toolbar">
           <button className="xp-tool-btn" onClick={prev} title="Previous drawing (Left Arrow)">
             ◀ PREV
@@ -78,21 +87,27 @@ export default function Sketchbook() {
           </button>
         </div>
 
-        {/* Main Stage with in-theme arrow buttons (no glowing effects) */}
+        {/* Main Stage with smooth stacked crossfade transition */}
         <div className="xp-slideshow-stage">
           <button className="slide-nav-arrow prev" onClick={prev} aria-label="Previous drawing">
             ◀
           </button>
 
           <div className="slide-frame">
-            <img
-              key={current}
-              src={SLIDES[current].url}
-              alt={SLIDES[current].title}
-              className="slide-img"
-              draggable={false}
-            />
-            <div className="slide-scanlines" aria-hidden="true" />
+            {SLIDES.map((slide, idx) => (
+              <div
+                key={slide.url}
+                className={`slide-item ${idx === current ? "active" : ""}`}
+                aria-hidden={idx !== current}
+              >
+                <img
+                  src={slide.url}
+                  alt={slide.title}
+                  className="slide-img"
+                  draggable={false}
+                />
+              </div>
+            ))}
           </div>
 
           <button className="slide-nav-arrow next" onClick={next} aria-label="Next drawing">

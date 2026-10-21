@@ -1072,11 +1072,7 @@ code {
 }
 
 .xp-intro-scan {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.12) 2px 4px);
-  mix-blend-mode: multiply;
+  display: none;
 }
 
 /* the self-typing profile terminal — retro CRT, VT323, phosphor green */
@@ -1420,7 +1416,7 @@ code {
   position: relative;
   width: 100%;
   background: #ece9d8;
-  border: 1px solid #0a246a;
+  border: 1px solid #1f241a;
   border-radius: 8px 8px 3px 3px;
   box-shadow: 3px 5px 18px rgba(0, 0, 0, 0.45);
   display: flex;
@@ -1512,7 +1508,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #080a08;
+  background: #000000;
   padding: 14px 16px;
   gap: 12px;
   min-height: 420px;
@@ -1561,11 +1557,33 @@ code {
   justify-content: center;
   height: 480px;
   max-height: 70vh;
-  border: 1px solid #7f9db9;
-  border-radius: 2px;
-  background: #050705;
+  border: none;
+  background: #000000;
   overflow: hidden;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+  box-shadow: none;
+}
+
+.slide-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.985);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slide-item.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .slide-img {
@@ -1575,15 +1593,10 @@ code {
   height: auto;
   object-fit: contain;
   display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.slide-scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.15) 2px 4px);
-  mix-blend-mode: multiply;
-}
 
 /* dots / thumbnails bar */
 .xp-slideshow-dots {
@@ -1611,22 +1624,22 @@ code {
 }
 
 .slide-dot:hover {
-  background: rgba(49, 106, 197, 0.15);
+  background: rgba(124, 201, 111, 0.15);
 }
 
 .slide-dot.active {
-  background: #316ac5;
+  background: var(--panel-2);
 }
 
 .slide-dot.active .dot-num {
-  color: #fff;
+  color: var(--green);
   font-weight: bold;
 }
 
 .dot-thumb {
   width: 56px;
   height: 38px;
-  border: 1px solid #7f9db9;
+  border: 1px solid var(--line-strong);
   border-radius: 2px;
   overflow: hidden;
   background: #000;
