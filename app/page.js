@@ -217,7 +217,7 @@ export default function Home() {
         <span className="banner-title">
           <span className="t1">RIYANSHI&apos;S</span>
           <span className="t2">WORLD.</span>
-          <span className="t3">&ldquo;Exploring Abyss and Beyond ~_ ~&rdquo;</span>
+          <span className="t3">&ldquo;Exploring Abyss and Beyond&rdquo;</span>
         </span>
       </div>
 
