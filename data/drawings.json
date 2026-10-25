@@ -1,0 +1,34 @@
+[
+  {
+    "id": "default-1",
+    "url": "/art/riya-1.jpg",
+    "title": "Artwork #01 — Riyanshi Noir"
+  },
+  {
+    "id": "default-2",
+    "url": "/art/riya-2.jpg",
+    "title": "Artwork #02 — Cyber Matrix"
+  },
+  {
+    "id": "default-3",
+    "url": "/art/riya-3.jpg",
+    "title": "Artwork #03 — Street Art Study"
+  },
+  {
+    "id": "default-4",
+    "url": "/art/riya-4.jpg",
+    "title": "Artwork #04 — Hacker Portrait"
+  },
+  {
+    "id": "draw-1792960731074",
+    "url": "/art/uploads/drawing-1792960731074-81b12194.jpg",
+    "title": "Artwork #05",
+    "createdAt": "2026-10-25T20:38:51.075Z"
+  },
+  {
+    "id": "draw-1792960985397",
+    "url": "/art/uploads/drawing-1792960985397-27f37a3a.jpg",
+    "title": "Artwork #06",
+    "createdAt": "2026-10-25T20:43:05.406Z"
+  }
+]

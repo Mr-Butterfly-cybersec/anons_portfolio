@@ -55,9 +55,8 @@ export default function XpConsole() {
   }, [cmdLog, cmdInput]);
 
   const hints = [
-    "Hint: Check the hidden directory in the VM filesystem",
-    "Hint: The flag is encoded in the AMI metadata",
-    "Hint: Look for port 1337 on the running instance"
+    "check pspy",
+    "it has something to do with cron"
   ];
 
   /* files in the folder — instructions + hints, open in Notepad */
@@ -80,10 +79,8 @@ export default function XpConsole() {
       content:
         "HINTS\n" +
         "========================================\n" +
-        "1. Check the hidden directory in the VM filesystem.\n" +
-        "2. The flag is encoded in the AMI metadata.\n" +
-        "3. Look for port 1337 on the running instance.\n" +
-        "\nUse them wisely — it's more fun blind."
+        "1. check pspy\n" +
+        "2. it has something to do with cron"
     }
   ];
 

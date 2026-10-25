@@ -32,9 +32,8 @@ export default function Home() {
   }, []);
 
   const hints = [
-    "Hint: Check the hidden directory in the VM filesystem",
-    "Hint: The flag is encoded in the AMI metadata",
-    "Hint: Look for port 1337 on the running instance"
+    "check pspy",
+    "it has something to do with cron"
   ];
 
   function clearHeartbeat() {
