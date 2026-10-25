@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from "react";
 import AddDrawingModal from "./AddDrawingModal";
+import ArtworkLightbox from "./ArtworkLightbox";
 
 /* SLIDESHOW — clean, retro photo viewer for drawings.
    - Smooth 60fps crossfade transitions between slides
    - Preloaded slide images for instant, zero-flicker switching
    - Themed brutalist retro buttons (no XP icons, no glowing effects)
    - High-security SHA-1024 protected drawing importer modal
-   - Uncropped contain presentation */
+   - Uncropped contain presentation
+   - Fullscreen lightbox view for phones, tablets & desktop */
 
 const INITIAL_SLIDES = [
   { id: "default-1", url: "/art/riya-1.jpg", title: "Artwork #01 — Riyanshi Noir" },
@@ -21,6 +23,7 @@ export default function Sketchbook() {
   const [slides, setSlides] = useState(INITIAL_SLIDES);
   const [current, setCurrent] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showLightbox, setShowLightbox] = useState(false);
 
   const prev = () => setCurrent((c) => (c === 0 ? slides.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === slides.length - 1 ? 0 : c + 1));
@@ -48,13 +51,13 @@ export default function Sketchbook() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (showAddModal) return; // don't navigate when typing in modal
+      if (showAddModal || showLightbox) return; // don't interfere with modal or lightbox
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [slides, showAddModal]);
+  }, [slides, showAddModal, showLightbox]);
 
   const handleDrawingAdded = (newDrawing) => {
     setSlides((prevSlides) => {
@@ -97,7 +100,13 @@ export default function Sketchbook() {
             File
           </span>
           <span className="menu-label">Edit</span>
-          <span className="menu-label">View</span>
+          <span
+            className="menu-label menu-clickable"
+            onClick={() => setShowLightbox(true)}
+            title="View drawings full screen"
+          >
+            View
+          </span>
           <span className="menu-label">Image</span>
           <span className="menu-label">Help</span>
         </div>
@@ -127,6 +136,13 @@ export default function Sketchbook() {
           >
             + ADD DRAWING
           </button>
+          <button
+            className="xp-tool-btn xp-tool-fs-btn"
+            onClick={() => setShowLightbox(true)}
+            title="View drawing in full screen"
+          >
+            ⛶ FULLSCREEN
+          </button>
           <button className="xp-tool-btn" onClick={prev} title="Previous drawing (Left Arrow)">
             ◀ PREV
           </button>
@@ -135,13 +151,25 @@ export default function Sketchbook() {
           </button>
         </div>
 
-        {/* Main Stage with smooth stacked crossfade transition */}
+        {/* Main Stage with smooth stacked crossfade transition & click-to-fullscreen */}
         <div className="xp-slideshow-stage">
           <button className="slide-nav-arrow prev" onClick={prev} aria-label="Previous drawing">
             ◀
           </button>
 
-          <div className="slide-frame">
+          <div
+            className="slide-frame"
+            onClick={() => setShowLightbox(true)}
+            title="Click to view artwork in full screen"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setShowLightbox(true);
+              }
+            }}
+          >
             {slides.map((slide, idx) => (
               <div
                 key={slide.id || slide.url}
@@ -156,6 +184,9 @@ export default function Sketchbook() {
                 />
               </div>
             ))}
+            <div className="slide-fs-hint" aria-hidden="true">
+              <span>⛶ FULLSCREEN</span>
+            </div>
           </div>
 
           <button className="slide-nav-arrow next" onClick={next} aria-label="Next drawing">
@@ -192,6 +223,15 @@ export default function Sketchbook() {
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         onDrawingAdded={handleDrawingAdded}
+      />
+
+      {/* Retro Fullscreen Lightbox Modal */}
+      <ArtworkLightbox
+        isOpen={showLightbox}
+        onClose={() => setShowLightbox(false)}
+        slides={slides}
+        currentIndex={current}
+        onNavigate={(idx) => setCurrent(idx)}
       />
     </section>
   );

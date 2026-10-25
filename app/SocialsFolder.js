@@ -1,7 +1,7 @@
 "use client";
 
 /* SOCIALS — an XP folder full of shortcuts. Double-click a shortcut to
-   open the link in a new tab. Same chrome as My_Riyanshi.exe / Field
+   open the link in a new tab (or single-tap on mobile/touch screens). Same chrome as My_Riyanshi.exe / Field
    Console so the whole row reads as one desktop. */
 
 const ICONS = {
@@ -82,11 +82,15 @@ export default function SocialsFolder() {
               key={link.label}
               className="xp-shortcut"
               onClick={(e) => {
+                const isSelected = e.currentTarget.classList.contains("selected");
                 document.querySelectorAll(".xp-socials .xp-shortcut.selected").forEach((i) => i.classList.remove("selected"));
                 e.currentTarget.classList.add("selected");
+                if (typeof window !== "undefined" && (window.matchMedia("(pointer: coarse)").matches || isSelected)) {
+                  open(link.href);
+                }
               }}
               onDoubleClick={() => open(link.href)}
-              title={"open " + link.href}
+              title={"Open " + link.href}
               role="link"
               tabIndex={0}
               onKeyDown={(e) => {

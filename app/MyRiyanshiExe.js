@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ArtworkLightbox from "./ArtworkLightbox";
 
 /* MY_RIYANSHI.EXE — the intro card. A Windows XP folder window that
    shows artwork + a self-typing profile, same chrome as Field Console
@@ -17,6 +18,7 @@ export default function MyRiyanshiExe() {
   const [mounted, setMounted] = useState(false);
   const [typed, setTyped] = useState("");
   const [blink, setBlink] = useState(true);
+  const [showFullscreen, setShowFullscreen] = useState(false);
   const termRef = useRef(null);
   const timersRef = useRef([]);
 
@@ -109,8 +111,13 @@ export default function MyRiyanshiExe() {
 
       <div className="xp-intro-body">
         {/* artwork 1 — the intro image */}
-        <div className="xp-intro-art">
+        <div
+          className="xp-intro-art xp-clickable-art"
+          onClick={() => setShowFullscreen(true)}
+          title="Click to view artwork full screen"
+        >
           <img src="/art/riya-1.jpg" alt="Riyanshi artwork" draggable={false} />
+          <span className="art-fs-badge">⛶ FULLSCREEN</span>
         </div>
 
         {/* self-typing profile terminal */}
@@ -124,6 +131,13 @@ export default function MyRiyanshiExe() {
         <div>1 object</div>
         <div className="xp-status-right">INTRO.EXE — READY</div>
       </div>
+
+      <ArtworkLightbox
+        isOpen={showFullscreen}
+        onClose={() => setShowFullscreen(false)}
+        slides={[{ url: "/art/riya-1.jpg", title: "Artwork #01 — Riyanshi Noir" }]}
+        currentIndex={0}
+      />
     </div>
   );
 }
